@@ -23,12 +23,12 @@ const Login: React.FC<LoginProps> = props => {
   };
 
   return (
-    <div className="container mx-auto flex flex-col items-center">
+    <div className="container mx-auto flex flex-col items-center pt-10">
       <h1>Login Form</h1>
-      <form onSubmit={onSubmit} className="flex w-[400px] flex-col gap-2">
-        <Input size="large" placeholder="Phone" prefix={<Tag>+998</Tag>} />
+      <form onSubmit={onSubmit} className="flex w-[500px] flex-col gap-2">
+        <Input size="large" placeholder="Phone" prefix={<Tag className="bg-blue-200  text-xl">+998</Tag>} />
         <Input.Password size="large" placeholder="Password" />
-        <Button size="large" type="primary" htmlType="submit">
+        <Button size="large" type="primary" htmlType="submit" className="uppercase">
           Login
         </Button>
       </form>
