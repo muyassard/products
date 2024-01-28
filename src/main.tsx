@@ -6,10 +6,8 @@ interface MainProps {}
 
 const Main: React.FC<MainProps> = props => {
   return (
-    <div className="flex mx-auto container w-[500px] flex-col items-center gap-4">
-      <Stores />
-      <hr className="w-full" />
-      <Products />
+    <div className="container mx-auto flex flex-col gap-4 pt-2">
+
     </div>
   );
 };

@@ -1,8 +1,14 @@
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 
-import Main from 'main';
+import Routes from 'routes';
+
 import 'assets/styles/tailwind.css';
 
 const root = createRoot(document.getElementById('root')!);
 
-root.render(<Main />);
+root.render(
+  <BrowserRouter>
+    <Routes />
+  </BrowserRouter>
+);

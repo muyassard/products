@@ -1,3 +1,4 @@
 import axios from 'axios';
+import { config } from 'config';
 
-export const http = axios.create({ baseURL: 'http://10.10.2.146:4000/api' });
+export const http = axios.create({ baseURL: config.api.baseURL });
