@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input, Tag } from 'antd';
+import { Button, Form, Input, Tag } from 'antd';
 import { Api, Types } from 'modules/auth';
 import store from 'store2';
 
@@ -25,13 +25,40 @@ const Login: React.FC<LoginProps> = props => {
   return (
     <div className="container mx-auto flex flex-col items-center pt-10">
       <h1>Login Form</h1>
-      <form onSubmit={onSubmit} className="flex w-[500px] flex-col gap-2">
-        <Input size="large" placeholder="Phone" prefix={<Tag className="bg-blue-200  text-xl">+998</Tag>} />
-        <Input.Password size="large" placeholder="Password" />
-        <Button size="large" type="primary" htmlType="submit" className="uppercase">
-          Login
-        </Button>
-      </form>
+      <Form autoComplete="off" onFinish={onSubmit} className="flex w-[500px] flex-col gap-2">
+        <Form.Item
+          rules={[
+            {
+              required: true,
+              message: 'Enter your phone number',
+              whitespace: true
+            }
+          ]}
+          hasFeedback
+          name="phoneNumber"
+        >
+          <Input size="large" placeholder="Phone" prefix={<Tag className="bg-blue-200  text-xl">+998</Tag>} />
+        </Form.Item>
+        <Form.Item
+          rules={[
+            {
+              required: true,
+              message: 'Enter password',
+              min: 8,
+              whitespace: true
+            }
+          ]}
+          hasFeedback
+          name="password"
+        >
+          <Input.Password size="large" placeholder="Password" />
+        </Form.Item>
+        <Form.Item>
+          <Button size="large" type="primary" htmlType="submit" className="uppercase">
+            Login
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

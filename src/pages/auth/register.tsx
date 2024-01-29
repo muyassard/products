@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input, Tag, message } from 'antd';
+import { Button, Form, Input, Tag, message } from 'antd';
 import { Api, Types } from 'modules/auth';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -32,15 +32,68 @@ const Register: React.FC<RegisterProps> = props => {
   return (
     <div className="container mx-auto flex flex-col items-center pt-10">
       <h1>Register Form</h1>
-      <form onSubmit={onSubmit} className="flex w-[500px] flex-col gap-2">
-        <Input size="large" placeholder="First name" />
-        <Input size="large" placeholder="Last name" />
-        <Input size="large" placeholder="Phone" prefix={<Tag className="bg-blue-200  text-xl">+998</Tag>} />
-        <Input.Password size="large" placeholder="Password" />
-        <Button size="large" type="primary" htmlType="submit" className="uppercase">
-          Register
-        </Button>
-      </form>
+      <Form autoComplete="off" onFinish={onSubmit} className="flex w-[500px] flex-col gap-2">
+        <Form.Item
+          rules={[
+            {
+              required: true,
+              message: 'Enter your first name',
+              min: 3,
+              whitespace: true
+            }
+          ]}
+          hasFeedback
+          name="firstName"
+        >
+          <Input size="large" placeholder="First name" />
+        </Form.Item>
+        <Form.Item
+          rules={[
+            {
+              required: true,
+              message: 'Enter your last name',
+              min: 3,
+              whitespace: true
+            }
+          ]}
+          hasFeedback
+          name="lastName"
+        >
+          <Input size="large" placeholder="Last name" />
+        </Form.Item>
+        <Form.Item
+          rules={[
+            {
+              required: true,
+              message: 'Enter your phone number',
+              whitespace: true
+            }
+          ]}
+          hasFeedback
+          name="phoneNumber"
+        >
+          <Input size="large" placeholder="Phone" prefix={<Tag className="bg-blue-200  text-xl">+998</Tag>} />
+        </Form.Item>
+        <Form.Item
+          rules={[
+            {
+              required: true,
+              message: 'Enter your password',
+              min: 8,
+              whitespace: true
+            }
+          ]}
+          hasFeedback
+          name="password"
+        >
+          <Input.Password size="large" placeholder="Password" />
+        </Form.Item>
+        <Form.Item>
+          <Button size="large" type="primary" htmlType="submit" className="uppercase">
+            Register
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };
