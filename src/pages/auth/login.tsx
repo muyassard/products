@@ -1,31 +1,30 @@
 import React from 'react';
-import { Button, Form, Input, Tag } from 'antd';
+import { Button, Form, Input, Tag, message } from 'antd';
 import { Api, Types } from 'modules/auth';
-import store from 'store2';
+import { session } from 'services';
 
-interface LoginProps {}
-
-const Login: React.FC<LoginProps> = props => {
-  const onSubmit: React.FormEventHandler = async e => {
-    e.preventDefault();
-    
-    const values: Types.IForm.Login = { phone: 'admin4', password: 'root123' };
-
+interface LoginProps {
+  refresh(): void;
+}
+const Login: React.FC<LoginProps> = ({ refresh }) => {
+  const onFinish = async (values: Types.IForm.Login) => {
     const { data } = await Api.Login(values);
     const token = data.data.token;
-    store.set('token', token);
+
+    session.add(token);
+    refresh();
 
     {
       const { data } = await Api.Me({ token });
       const user = data.data;
-      console.log('user = ', user);
+      message.success(`👋🏻 Welcome ${user.firstName}!`);
     }
   };
 
   return (
     <div className="container mx-auto flex flex-col items-center pt-10">
       <h1>Login Form</h1>
-      <Form autoComplete="off" onFinish={onSubmit} className="flex w-[500px] flex-col gap-2">
+      <Form autoComplete="off" onFinish={onFinish} className="flex w-[500px] flex-col gap-2">
         <Form.Item
           rules={[
             {

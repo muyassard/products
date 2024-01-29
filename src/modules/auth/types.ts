@@ -37,3 +37,13 @@ export namespace IApi {
     export interface Response extends StandardResponse<IEntity.User> {}
   }
 }
+
+export interface IContext {
+  user: IEntity.User | null;
+  isLoading: boolean;
+  isAuthenticated: boolean;
+  methods: {
+    login(user: IEntity.User): void;
+    logout(): void;
+  };
+}

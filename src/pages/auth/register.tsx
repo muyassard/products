@@ -2,23 +2,13 @@ import React from 'react';
 import { Button, Form, Input, Tag, message } from 'antd';
 import { Api, Types } from 'modules/auth';
 import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-interface RegisterProps {}
-
-const Register: React.FC<RegisterProps> = props => {
+const Register: React.FC = () => {
   const navigate = useNavigate();
 
-  const onSubmit: React.FormEventHandler = async e => {
-    e.preventDefault();
+  const onFinish = async (values: Types.IForm.Register) => {
     try {
-      const values: Types.IForm.Register = {
-        firstName: 'Kent',
-        lastName: 'Mark',
-        phone: 'admin4',
-        password: 'root123'
-      };
-
       const { data } = await Api.Register(values);
       message.success(`Successfully registered. Hi ${data.data.firstName}`);
       navigate('/auth/login');
@@ -32,7 +22,7 @@ const Register: React.FC<RegisterProps> = props => {
   return (
     <div className="container mx-auto flex flex-col items-center pt-10">
       <h1>Register Form</h1>
-      <Form autoComplete="off" onFinish={onSubmit} className="flex w-[500px] flex-col gap-2">
+      <Form autoComplete="off" onFinish={onFinish} className="flex w-[500px] flex-col gap-2">
         <Form.Item
           rules={[
             {
