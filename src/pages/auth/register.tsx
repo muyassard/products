@@ -88,8 +88,8 @@ const Register: React.FC<RegisterProps> = props => {
         >
           <Input.Password size="large" placeholder="Password" />
         </Form.Item>
-        <Form.Item>
-          <Button size="large" type="primary" htmlType="submit" className="uppercase">
+        <Form.Item  >
+          <Button block size="large" type="primary" htmlType="submit" className="uppercase">
             Register
           </Button>
         </Form.Item>

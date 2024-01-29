@@ -8,7 +8,7 @@ interface LoginProps {}
 const Login: React.FC<LoginProps> = props => {
   const onSubmit: React.FormEventHandler = async e => {
     e.preventDefault();
-
+    
     const values: Types.IForm.Login = { phone: 'admin4', password: 'root123' };
 
     const { data } = await Api.Login(values);
@@ -44,8 +44,10 @@ const Login: React.FC<LoginProps> = props => {
             {
               required: true,
               message: 'Enter password',
-              min: 8,
               whitespace: true
+            },{
+              min: 8,
+              message:"Please enter your password"
             }
           ]}
           hasFeedback
@@ -54,7 +56,7 @@ const Login: React.FC<LoginProps> = props => {
           <Input.Password size="large" placeholder="Password" />
         </Form.Item>
         <Form.Item>
-          <Button size="large" type="primary" htmlType="submit" className="uppercase">
+          <Button block size="large" type="primary" htmlType="submit" className="uppercase">
             Login
           </Button>
         </Form.Item>
