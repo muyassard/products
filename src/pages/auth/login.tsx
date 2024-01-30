@@ -2,21 +2,21 @@ import React from 'react';
 import { Button, Form, Input, Tag, message } from 'antd';
 import { Api, Types } from 'modules/auth';
 import { session } from 'services';
+import { Link } from 'react-router-dom';
+import { MainContext } from 'main';
 
-interface LoginProps {
-  refresh(): void;
-}
-const Login: React.FC<LoginProps> = ({ refresh }) => {
+const Login: React.FC = () => {
+  const { login } = React.useContext(MainContext);
+
   const onFinish = async (values: Types.IForm.Login) => {
     const { data } = await Api.Login(values);
     const token = data.data.token;
-
     session.add(token);
-    refresh();
 
     {
       const { data } = await Api.Me({ token });
       const user = data.data;
+      login(user);
       message.success(`👋🏻 Welcome ${user.firstName}!`);
     }
   };
@@ -44,9 +44,10 @@ const Login: React.FC<LoginProps> = ({ refresh }) => {
               required: true,
               message: 'Enter password',
               whitespace: true
-            },{
+            },
+            {
               min: 8,
-              message:"Please enter your password"
+              message: 'Please enter your password'
             }
           ]}
           hasFeedback
@@ -59,6 +60,9 @@ const Login: React.FC<LoginProps> = ({ refresh }) => {
             Login
           </Button>
         </Form.Item>
+        <Link to="/auth/register" className="w-max self-end">
+          Go to Register
+        </Link>
       </Form>
     </div>
   );

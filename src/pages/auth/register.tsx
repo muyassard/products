@@ -78,11 +78,14 @@ const Register: React.FC = () => {
         >
           <Input.Password size="large" placeholder="Password" />
         </Form.Item>
-        <Form.Item  >
+        <Form.Item>
           <Button block size="large" type="primary" htmlType="submit" className="uppercase">
             Register
           </Button>
         </Form.Item>
+        <Link to="/auth/login" className="w-max self-end">
+          Go to Login
+        </Link>
       </Form>
     </div>
   );
