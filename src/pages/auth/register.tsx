@@ -20,69 +20,40 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto flex flex-col items-center pt-10">
+    <div className="container mx-auto flex flex-col items-center">
       <h1>Register Form</h1>
-      <Form autoComplete="off" onFinish={onFinish} className="flex w-[500px] flex-col gap-2">
-        <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Enter your first name',
-              min: 3,
-              whitespace: true
-            }
-          ]}
-          hasFeedback
+      <Form onFinish={onFinish} className="flex w-[400px] flex-col gap-2">
+        <Form.Item<Types.IForm.Register>
+          className="m-0"
           name="firstName"
+          rules={[{ required: true, message: 'Please input your first name!' }]}
         >
           <Input size="large" placeholder="First name" />
         </Form.Item>
-        <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Enter your last name',
-              min: 3,
-              whitespace: true
-            }
-          ]}
-          hasFeedback
+        <Form.Item<Types.IForm.Register>
+          className="m-0"
           name="lastName"
+          rules={[{ required: true, message: 'Please input your last name!' }]}
         >
           <Input size="large" placeholder="Last name" />
         </Form.Item>
-        <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Enter your phone number',
-              whitespace: true
-            }
-          ]}
-          hasFeedback
-          name="phoneNumber"
+        <Form.Item<Types.IForm.Register>
+          className="m-0"
+          name="phone"
+          rules={[{ required: true, message: 'Please input your phone!' }]}
         >
-          <Input size="large" placeholder="Phone" prefix={<Tag className="bg-blue-200  text-xl">+998</Tag>} />
+          <Input size="large" placeholder="Phone" prefix={<Tag>+998</Tag>} />
         </Form.Item>
-        <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Enter your password',
-              min: 8,
-              whitespace: true
-            }
-          ]}
-          hasFeedback
+        <Form.Item<Types.IForm.Register>
+          className="m-0"
           name="password"
+          rules={[{ required: true, message: 'Please input your password!' }]}
         >
           <Input.Password size="large" placeholder="Password" />
         </Form.Item>
-        <Form.Item>
-          <Button block size="large" type="primary" htmlType="submit" className="uppercase">
-            Register
-          </Button>
-        </Form.Item>
+        <Button size="large" type="primary" htmlType="submit">
+          Register
+        </Button>
         <Link to="/auth/login" className="w-max self-end">
           Go to Login
         </Link>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button } from 'antd';
-import { MainContext } from 'main';
 import { Navbar } from 'components';
+import { AuthContext } from 'modules/auth/context';
 
 const Dashboard: React.FC = () => {
-  const { logout } = React.useContext(MainContext);
-  
+  const { logout } = React.useContext(AuthContext);
+
   return (
     <>
       <Navbar />

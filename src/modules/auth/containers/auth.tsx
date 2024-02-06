@@ -1,19 +1,46 @@
 import React from 'react';
-import { AuthContext } from '../context';
+import { session } from 'services';
 import { IEntity } from '../types';
+import { Spin } from 'antd';
+import { AuthContext } from '../context';
+import { Api } from '..';
 
 interface AuthProps {
   children: React.ReactNode;
 }
 
 const Auth: React.FC<AuthProps> = ({ children }) => {
-  const [state, setState] = React.useState({ user: null, isLoading: false, isAuthenticated: false });
+  const [loading, setLoading] = React.useState(!!session.get());
+  const [user, setUser] = React.useState<IEntity.User | null>(null);
 
-  const login = (user: IEntity.User) => {};
+  const logout = () => {
+    session.remove();
+    setUser(null);
+  };
 
-  const logout = () => {};
+  const login = (user: IEntity.User) => {
+    setUser(user);
+  };
 
-  return <AuthContext.Provider value={{ ...state, methods: { logout, login } }}>{children}</AuthContext.Provider>;
+  React.useEffect(() => {
+    if (!loading) return;
+
+    // const token = session.get();
+    // Api.Me({ token }).then(({ data }) => {
+    //   const user = data.data;
+    //   login(user);
+    //   setLoading(false);
+    // });
+  }, []);
+
+  // if (loading)
+  //   return (
+  //     <div className="grid h-screen w-screen place-items-center">
+  //       <Spin size="large" />
+  //     </div>
+  //   );
+
+  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
 };
 
 export default Auth;

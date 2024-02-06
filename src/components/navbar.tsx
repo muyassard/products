@@ -1,11 +1,9 @@
 import { Button } from 'antd';
-import { MainContext } from 'main';
+import { AuthContext } from 'modules/auth/context';
 import React from 'react';
 
-interface NavbarProps {}
-
-const Navbar: React.FC<NavbarProps> = props => {
-  const { user } = React.useContext(MainContext);
+const Navbar: React.FC = () => {
+  const { user } = React.useContext(AuthContext);
   return (
     <nav className="box-border flex w-full items-center justify-between bg-blue-200 px-6 py-2">
       <Button href="#home">Docs App</Button>

@@ -1,20 +1,19 @@
 import React from 'react';
 import { Button, Form, Input, Tag, message } from 'antd';
 import { Api, Types } from 'modules/auth';
-import { session } from 'services';
 import { Link } from 'react-router-dom';
-import { MainContext } from 'main';
+import { session } from 'services';
 
-
+import { AuthContext } from 'modules/auth/context';
 
 const Login: React.FC = () => {
-  const { login } = React.useContext(MainContext);
+  const { login } = React.useContext(AuthContext);
 
   const onFinish = async (values: Types.IForm.Login) => {
     const { data } = await Api.Login(values);
     const token = data.data.token;
     session.add(token);
-    
+
     {
       const { data } = await Api.Me({ token });
       const user = data.data;
@@ -24,44 +23,26 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="mt-10  flex flex-col  items-center rounded-lg bg-white p-5 ">
+    <div className="container mx-auto flex flex-col items-center">
       <h1>Login Form</h1>
-      <Form autoComplete="off" onFinish={onFinish} className="flex w-[500px] flex-col gap-2">
-        <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Enter your phone number',
-              whitespace: true
-            }
-          ]}
-          hasFeedback
-          name="phoneNumber"
+      <Form onFinish={onFinish} className="flex w-[400px] flex-col gap-2">
+        <Form.Item<Types.IForm.Login>
+          className="m-0"
+          name="phone"
+          rules={[{ required: true, message: 'Please input your phone!' }]}
         >
-          <Input size="large" placeholder="Phone" prefix={<Tag className="bg-blue-200  text-xl">+998</Tag>} />
+          <Input size="large" placeholder="Phone" prefix={<Tag>+998</Tag>} />
         </Form.Item>
-        <Form.Item
-          rules={[
-            {
-              required: true,
-              message: 'Enter password',
-              whitespace: true
-            },
-            {
-              min: 8,
-              message: 'Please enter your password'
-            }
-          ]}
-          hasFeedback
+        <Form.Item<Types.IForm.Login>
+          className="m-0"
           name="password"
+          rules={[{ required: true, message: 'Please input your password!' }]}
         >
           <Input.Password size="large" placeholder="Password" />
         </Form.Item>
-        <Form.Item>
-          <Button block size="large" type="primary" htmlType="submit" className="uppercase">
-            Login
-          </Button>
-        </Form.Item>
+        <Button size="large" type="primary" htmlType="submit">
+          Login
+        </Button>
         <Link to="/auth/register" className="w-max self-end">
           Go to Register
         </Link>
