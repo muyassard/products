@@ -17,7 +17,8 @@
 }
 
 body {
-  margin: 0;
+  background-repeat: no-repeat;
+  background-image: url('../styles/Rectangle\ 2.svg');
 }
 
 @font-face {

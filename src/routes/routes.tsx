@@ -10,7 +10,7 @@ const Routes: React.FC = () => {
   const isAuthenticated = !!user;
 
   return (
-    <Switch>
+    <Switch>  
       <Route path="auth" element={<Protected allow={!isAuthenticated} to="/dashboard" />}>
         <Route path="login" element={<Auth.Login />} />
         <Route path="register" element={<Auth.Register />} />
@@ -20,7 +20,7 @@ const Routes: React.FC = () => {
       <Route path="dashboard" element={<Protected allow={isAuthenticated} to="/auth/login" />}>
         <Route index element={<Dashboard />} />
         <Route path="*" element={<Navigate to="/dashboard" />} />
-      </Route>
+      </Route> 
 
       <Route index path="*" element={<Navigate to="/auth/login" />} />
     </Switch>

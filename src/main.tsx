@@ -59,7 +59,7 @@ class Main extends Component<{}, IMainState> {
 
     if (loading) {
       return (
-        <div className="grid h-screen w-screen place-items-center">
+        <div className="grid  place-items-center">
           <Spin size="large" />
         </div>
       );

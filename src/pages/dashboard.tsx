@@ -5,7 +5,7 @@ import { Navbar } from 'components';
 
 const Dashboard: React.FC = () => {
   const { logout } = React.useContext(MainContext);
-
+  
   return (
     <>
       <Navbar />

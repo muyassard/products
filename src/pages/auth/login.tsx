@@ -5,6 +5,8 @@ import { session } from 'services';
 import { Link } from 'react-router-dom';
 import { MainContext } from 'main';
 
+
+
 const Login: React.FC = () => {
   const { login } = React.useContext(MainContext);
 
@@ -12,7 +14,7 @@ const Login: React.FC = () => {
     const { data } = await Api.Login(values);
     const token = data.data.token;
     session.add(token);
-
+    
     {
       const { data } = await Api.Me({ token });
       const user = data.data;
@@ -22,7 +24,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto flex flex-col items-center pt-10">
+    <div className="mt-10  flex flex-col  items-center rounded-lg bg-white p-5 ">
       <h1>Login Form</h1>
       <Form autoComplete="off" onFinish={onFinish} className="flex w-[500px] flex-col gap-2">
         <Form.Item
