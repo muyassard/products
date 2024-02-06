@@ -24,7 +24,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="container mx-auto flex flex-col items-center">
-      <h1>Login Form</h1>
+      <h1 className='text-white'>Login Form</h1>
       <Form onFinish={onFinish} className="flex w-[400px] flex-col gap-2">
         <Form.Item<Types.IForm.Login>
           className="m-0"
