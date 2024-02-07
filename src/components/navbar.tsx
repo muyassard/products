@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
   const { logout } = useContext(AuthContext);
   const { user } = React.useContext(AuthContext);
   return (
-    <div className="box-border flex w-52  flex-col   justify-between gap-5 bg-white px-6 py-2">
+    <div className="box-border flex w-52  flex-col justify-between gap-5 bg-white px-6 py-3">
       <nav className="flex flex-col gap-5">
         <h2 className="!m-0 !p-0 font-bold">{user?.firstName || '--'}</h2>
         <Button href="#home">Docs App</Button>

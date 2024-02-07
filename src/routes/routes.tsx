@@ -9,7 +9,6 @@ import { Navbar } from 'components';
 const Routes: React.FC = () => {
   const { user } = React.useContext(AuthContext);
   const isAuthenticated = !!user;
-  // const isAuthenticated = true;
 
   return (
     <Switch>
