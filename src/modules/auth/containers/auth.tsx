@@ -25,20 +25,20 @@ const Auth: React.FC<AuthProps> = ({ children }) => {
   React.useEffect(() => {
     if (!loading) return;
 
-    // const token = session.get();
-    // Api.Me({ token }).then(({ data }) => {
-    //   const user = data.data;
-    //   login(user);
-    //   setLoading(false);
-    // });
+    const token = session.get();
+    Api.Me({ token }).then(({ data }) => {
+      const user = data.data;
+      login(user);
+      setLoading(false);
+    });
   }, []);
 
-  // if (loading)
-  //   return (
-  //     <div className="grid h-screen w-screen place-items-center">
-  //       <Spin size="large" />
-  //     </div>
-  //   );
+  if (loading)
+    return (
+      <div className="grid  place-items-center">
+        <Spin size="large" />
+      </div>
+    );
 
   return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
 };

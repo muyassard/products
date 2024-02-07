@@ -1,3 +1,4 @@
+/* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
 
@@ -17,6 +18,9 @@
 }
 
 body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
   background-repeat: no-repeat;
   background-image: url('../styles/Rectangle\ 2.svg');
 }

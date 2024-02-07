@@ -1,19 +1,66 @@
-import React from 'react';
-import { Button } from 'antd';
-import { Navbar } from 'components';
-import { AuthContext } from 'modules/auth/context';
+import { Button, Table, Tag } from 'antd';
+import React, { useEffect, useState } from 'react';
 
-const Dashboard: React.FC = () => {
-  const { logout } = React.useContext(AuthContext);
+interface MainProps {}
+
+let url = 'http://137.184.188.134:4000/api/shop';
+
+const Dashboard: React.FC<MainProps> = props => {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+        const responseData = await response.json();
+        setData(responseData);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <>
-      <Navbar />
-      <div className="flex flex-col items-start gap-2 p-4 px-6">
-        Hello Dashboard
-        <Button onClick={logout}>Log out</Button>
-      </div>
-    </>
+    <div className="container  py-2">
+      <Table
+        dataSource={data}
+        rowKey="_id"
+        loading={isLoading}
+        pagination={false}
+        columns={[
+          { title: '№', render: (v, r, idx) => idx + 1 },
+          { title: 'Title', dataIndex: 'title' },
+          {
+            title: 'Location',
+            dataIndex: 'location',
+            filters: [{ text: 'Abu Saxiy', value: true }],
+            onFilter: (value: any, record: any) => {
+              return record.completed === value;
+            }
+          },
+          {
+            title: 'Phone number',
+            dataIndex: 'phone',
+            render: (_, { tags }) => (
+              <>
+                {tags.map((tag: any) => {
+                  return (
+                    <Tag color="blue" key={tag}>
+                      {tag.toUpperCase()}
+                    </Tag>
+                  );
+                })}
+              </>
+            )
+          },
+          { title: 'Number', dataIndex: 'number' }
+        ]}
+      />
+    </div>
   );
 };
 

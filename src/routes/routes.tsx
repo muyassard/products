@@ -4,10 +4,12 @@ import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import { Auth, Dashboard } from 'pages';
 import Protected from './protected';
 import { AuthContext } from 'modules/auth/context';
+import { Navbar } from 'components';
 
-const Routes: React.FC = () => { 
+const Routes: React.FC = () => {
   const { user } = React.useContext(AuthContext);
   const isAuthenticated = !!user;
+  // const isAuthenticated = true;
 
   return (
     <Switch>
@@ -18,7 +20,15 @@ const Routes: React.FC = () => {
       </Route>
 
       <Route path="dashboard" element={<Protected allow={isAuthenticated} to="/auth/login" />}>
-        <Route index element={<Dashboard />} />
+        <Route
+          index
+          element={
+            <div className="flex h-[100%]">
+              <Navbar />
+              <Dashboard />
+            </div>
+          }
+        />
 
         <Route
           path=":serviceId"
@@ -28,7 +38,7 @@ const Routes: React.FC = () => {
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Route>
 
-      <Route index path="*" element={<Navigate to="/auth/login" />} />
+      <Route index path="*" element={<Navigate to="/dashboard" />} />
     </Switch>
   );
 };

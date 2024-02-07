@@ -29,6 +29,7 @@ const Login: React.FC = () => {
         <Form.Item<Types.IForm.Login>
           className="m-0"
           name="phone"
+          hasFeedback
           rules={[{ required: true, message: 'Please input your phone!' }]}
         >
           <Input size="large" placeholder="Phone" prefix={<Tag>+998</Tag>} />
@@ -36,13 +37,16 @@ const Login: React.FC = () => {
         <Form.Item<Types.IForm.Login>
           className="m-0"
           name="password"
+          hasFeedback
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
           <Input.Password size="large" placeholder="Password" />
         </Form.Item>
-        <Button size="large" type="primary" htmlType="submit">
-          Login
-        </Button>
+        <Form.Item>
+          <Button block size="large" type="primary" htmlType="submit">
+            Login
+          </Button>
+        </Form.Item>
         <Link to="/auth/register" className="w-max self-end">
           Go to Register
         </Link>

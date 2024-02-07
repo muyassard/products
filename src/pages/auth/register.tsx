@@ -4,6 +4,7 @@ import { Api, Types } from 'modules/auth';
 import { AxiosError } from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
+ 
 const Register: React.FC = () => {
   const navigate = useNavigate();
 
@@ -51,9 +52,11 @@ const Register: React.FC = () => {
         >
           <Input.Password size="large" placeholder="Password" />
         </Form.Item>
-        <Button size="large" type="primary" htmlType="submit">
-          Register
-        </Button>
+        <Form.Item>
+          <Button block size="large" type="primary" htmlType="submit">
+            Register
+          </Button>
+        </Form.Item>
         <Link to="/auth/login" className="w-max self-end">
           Go to Login
         </Link>
