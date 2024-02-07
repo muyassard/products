@@ -3,7 +3,6 @@ import { session } from 'services';
 import { IEntity } from '../types';
 import { Spin } from 'antd';
 import { AuthContext } from '../context';
-import { Api } from '..';
 
 interface AuthProps {
   children: React.ReactNode;

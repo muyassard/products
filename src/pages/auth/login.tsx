@@ -24,7 +24,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="container mx-auto flex flex-col items-center">
-      <h1>Login Form</h1>
+      <h1 className="text-white">Login Form</h1>
       <Form onFinish={onFinish} className="flex w-[400px] flex-col gap-2">
         <Form.Item<Types.IForm.Login>
           className="m-0"
@@ -32,7 +32,7 @@ const Login: React.FC = () => {
           hasFeedback
           rules={[{ required: true, message: 'Please input your phone!' }]}
         >
-          <Input size="large" placeholder="Phone" prefix={<Tag>+998</Tag>} />
+          <Input size="large" placeholder="Phone" prefix={<Tag className="bg-blue-100">+998</Tag>} />
         </Form.Item>
         <Form.Item<Types.IForm.Login>
           className="m-0"
