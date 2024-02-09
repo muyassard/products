@@ -6,4 +6,3 @@ export const Login = (data: IApi.Login.Request) => http.post<IApi.Login.Response
 export const Register = (data: IApi.Register.Request) => http.post<IApi.Register.Response>('/auth/register', data);
 export const Me = ({ token }: IApi.Me.Request) =>
   http.get<IApi.Me.Response>('/auth/me', { headers: { [config.api.tokenKEY]: token } });
- 

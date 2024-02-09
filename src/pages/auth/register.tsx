@@ -4,7 +4,6 @@ import { Api, Types } from 'modules/auth';
 import { AxiosError } from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
- 
 const Register: React.FC = () => {
   const navigate = useNavigate();
 
@@ -22,7 +21,7 @@ const Register: React.FC = () => {
 
   return (
     <div className="container mx-auto flex flex-col items-center">
-      <h1 className="text-white">Register Form</h1>
+      <h1>Register Form</h1>
       <Form onFinish={onFinish} className="flex w-[400px] flex-col gap-2">
         <Form.Item<Types.IForm.Register>
           className="m-0"

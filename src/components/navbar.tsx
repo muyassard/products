@@ -1,26 +1,30 @@
-import { Button } from 'antd';
+import React from 'react';
+import { Segmented } from 'antd';
 import { AuthContext } from 'modules/auth/context';
-import React, { useContext } from 'react';
-import { FaInbox } from 'react-icons/fa';
 
-import { NavLink } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
-  const { logout } = useContext(AuthContext);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
   const { user } = React.useContext(AuthContext);
   return (
-    <div className="box-border flex w-52  flex-col justify-between gap-5 bg-white px-6 py-3">
-      <nav className="flex flex-col gap-5">
-        <h2 className="!m-0 !p-0 font-bold">{user?.firstName || '--'}</h2>
-        <Button href="#home">Docs App</Button>
-        <NavLink to="/shops" className="item-center flex gap-5 rounded-lg p-1 pl-3 text-[#666] hover:bg-blue-300">
-          <div className="icon relative top-1">
-            <FaInbox />
-          </div>
-          <div className="">Shop</div>
-        </NavLink>
+    <div className=" flex    justify-between gap-5 bg-white px-6 py-3">
+      <nav className="box-border flex w-full items-center justify-center  px-6 py-2">
+        <Segmented
+          size="large"
+          value={pathname}
+          onChange={path => navigate(path as string)}
+          options={[
+            { label: 'Dashboard', value: '/app/dashboard' },
+            { label: 'Shops', value: '/app/shops' },
+            { label: 'Purchases', value: '/app/purchases' },
+            { label: 'Payouts', value: '/app/payouts' }
+          ]}
+        />
       </nav>
-      <Button onClick={logout}>Log out</Button>
+      <h2 className="!m-0 !p-0 font-bold">{user?.firstName || '--'}</h2>
     </div>
   );
 };

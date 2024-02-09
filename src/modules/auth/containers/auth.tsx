@@ -26,16 +26,18 @@ const Auth: React.FC<AuthProps> = ({ children }) => {
     if (!loading) return;
 
     const token = session.get();
-    Api.Me({ token }).then(({ data }) => {
-      const user = data.data;
-      login(user);
-      setLoading(false);
-    });
+    Api.Me({ token })
+      .then(({ data }) => {
+        const user = data.data;
+        login(user);
+        setLoading(false);
+      })
+      .catch(session.remove);
   }, []);
 
   if (loading)
     return (
-      <div className="grid  place-items-center">
+      <div className="grid h-screen w-screen place-items-center">
         <Spin size="large" />
       </div>
     );

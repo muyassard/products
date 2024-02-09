@@ -1,10 +1,10 @@
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 
-import { Auth, Dashboard } from 'pages';
+import { Auth, Dashboard, Shops, Purchases, Payouts } from 'pages';
 import Protected from './protected';
 import { AuthContext } from 'modules/auth/context';
-import { Navbar } from 'components';
+import { Main } from 'layouts';
 
 const Routes: React.FC = () => {
   const { user } = React.useContext(AuthContext);
@@ -12,32 +12,22 @@ const Routes: React.FC = () => {
 
   return (
     <Switch>
-      <Route path="auth" element={<Protected allow={!isAuthenticated} to="/dashboard" />}>
+      <Route path="app" element={<Protected Layout={Main} allow={isAuthenticated} to="/auth/login" />}>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="shops" element={<Shops />} />
+        <Route path="purchases" element={<Purchases />} />
+        <Route path="payouts" element={<Payouts />} />
+
+        <Route index path="*" element={<Navigate to="/app/dashboard" />} />
+      </Route>
+
+      <Route path="auth" element={<Protected allow={!isAuthenticated} to="/app" />}>
         <Route path="login" element={<Auth.Login />} />
         <Route path="register" element={<Auth.Register />} />
         <Route index path="*" element={<Navigate to="/auth/login" />} />
       </Route>
 
-      <Route path="dashboard" element={<Protected allow={isAuthenticated} to="/auth/login" />}>
-        <Route
-          index
-          element={
-            <div className="flex h-[100%]">
-              <Navbar />
-              <Dashboard />
-            </div>
-          }
-        />
-
-        <Route
-          path=":serviceId"
-          element={<Protected allow={isAuthenticated} to="/auth/login" element={<h1>Single Service</h1>} />}
-        />
-
-        <Route path="*" element={<Navigate to="/dashboard" />} />
-      </Route>
-
-      <Route index path="*" element={<Navigate to="/dashboard" />} />
+      <Route index path="*" element={<Navigate to={isAuthenticated ? '/app/dashboard' : '/auth/login'} />} />
     </Switch>
   );
 };
