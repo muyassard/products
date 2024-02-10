@@ -31,14 +31,15 @@ export const useList = () => {
     load();
   }, []);
 
-  const refetch = async () => { 
+  const refetch = async () => {
     try {
-      setState(prev => ({ ...prev, isLoading: true })); 
+      setState(prev => ({ ...prev, isLoading: true }));
 
       const { data } = await axios.get(config.api.baseURL + '/shops', {
         headers: { 'x-auth-token': config.api.tokenKEY }
       });
-      setState(prev => ({ ...prev, shops: data.data })); 
+      setState(prev => ({ isLoading: false, shops: data.data }));
+      message.success('...');
     } catch (error) {
       setState(prev => ({ ...prev, isLoading: false }));
     }

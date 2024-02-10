@@ -26,7 +26,6 @@ export namespace IForm {
     phone: string;
     number: string;
   }
-  // export interface Update {}
   export interface Delete {}
   export interface Update extends Partial<Omit<IEntity.Shop, "createdAt">> {}
 
@@ -62,7 +61,7 @@ export namespace IApi {
     }
     export interface Response {}
   }
-
+  
   export namespace Delete {
     export interface Request extends IForm.Delete {
       token: string;
