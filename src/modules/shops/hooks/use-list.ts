@@ -3,6 +3,8 @@ import { IEntity } from '../types';
 import { message } from 'antd';
 import { session } from 'services';
 import { Api, Mappers } from '..';
+import axios from 'axios';
+import { config } from 'config';
 
 interface IState {
   isLoading: boolean;
@@ -29,7 +31,18 @@ export const useList = () => {
     load();
   }, []);
 
-  const refetch = () => {};
+  const refetch = async () => { 
+    try {
+      setState(prev => ({ ...prev, isLoading: true })); 
+
+      const { data } = await axios.get(config.api.baseURL + '/shops', {
+        headers: { 'x-auth-token': config.api.tokenKEY }
+      });
+      setState(prev => ({ ...prev, shops: data.data })); 
+    } catch (error) {
+      setState(prev => ({ ...prev, isLoading: false }));
+    }
+  };
 
   return { ...state, refetch };
 };

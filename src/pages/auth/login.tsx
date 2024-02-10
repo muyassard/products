@@ -24,11 +24,11 @@ const Login: React.FC = () => {
         message.success(`👋🏻 Welcome ${user.firstName}!`);
       }
     } catch (error) {
-      message.error(`login qilish xato`);
+      message.error(` error `);
     } finally {
       setIsLoading(false);
     }
-  }; 
+  };
 
   return (
     <div className=" container mx-auto flex flex-col items-center">
