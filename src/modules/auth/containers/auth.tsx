@@ -24,7 +24,7 @@ const Auth: React.FC<AuthProps> = ({ children }) => {
 
   React.useEffect(() => {
     if (!loading) return;
-
+    
     const token = session.get();
     Api.Me({ token })
       .then(({ data }) => {

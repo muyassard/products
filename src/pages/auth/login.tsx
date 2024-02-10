@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Form, Input, Tag, message } from 'antd';
+import React, { useState } from 'react';
+import { Button, Form, Input, Spin, Tag, message } from 'antd';
 import { Api, Types } from 'modules/auth';
 import { Link } from 'react-router-dom';
 import { session } from 'services';
@@ -8,22 +8,32 @@ import { AuthContext } from 'modules/auth/context';
 
 const Login: React.FC = () => {
   const { login } = React.useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState<boolean>();
 
   const onFinish = async (values: Types.IForm.Login) => {
-    const { data } = await Api.Login(values);
-    const token = data.data.token;
-    session.add(token);
+    setIsLoading(true);
+    try {
+      const { data } = await Api.Login(values);
+      const token = data.data.token;
+      session.add(token);
 
-    {
-      const { data } = await Api.Me({ token });
-      const user = data.data;
-      login(user);
-      message.success(`👋🏻 Welcome ${user.firstName}!`);
+      {
+        const { data } = await Api.Me({ token });
+        const user = data.data;
+        login(user);
+        message.success(`👋🏻 Welcome ${user.firstName}!`);
+      }
+    } catch (error) {
+      message.error(`login qilish xato`);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }; 
 
   return (
-    <div className="container mx-auto flex flex-col items-center">
+    <div className=" container mx-auto flex flex-col items-center">
+      {isLoading ? <Spin /> : <></>}
+
       <h1>Login Form</h1>
       <Form onFinish={onFinish} className="flex w-[400px] flex-col gap-2">
         <Form.Item<Types.IForm.Login>
