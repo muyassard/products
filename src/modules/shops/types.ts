@@ -27,7 +27,7 @@ export namespace IForm {
     number: string;
   }
   export interface Delete {
-    
+    id: string;
   }
   export interface Update extends Partial<Omit<IEntity.Shop, 'createdAt'>> {}
 }

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Modal, Popconfirm, Table } from 'antd';
 import { useList } from 'modules/shops/hooks';
-import { Create, Update } from 'modules/shops/shop';
+import { Create, Delete, Update } from 'modules/shops/shop';
 import { values } from 'lodash';
 import { IEntity, IForm } from 'modules/shops/types';
+import { config } from 'config';
 
 const Shops: React.FC = () => {
   const { isLoading, shops, refetch } = useList();
@@ -19,7 +20,12 @@ const Shops: React.FC = () => {
     Create(values);
     refetch();
   };
-
+  
+  const remove = (id: any) => {
+    console.log(`[DELETE] = ${id}`);
+    Delete(id);
+    refetch();
+  };
 
   const edit = (id: string) => {
     // setState(prev => ({ ...prev, isModalOpen: true }));
@@ -111,7 +117,7 @@ const Shops: React.FC = () => {
           {
             title: 'sellers',
             dataIndex: 'sellers',
-            render: (sellers:any[], index) => (
+            render: (sellers: any[], index) => (
               <Button.Group>
                 <Button onClick={() => console.log(`${sellers}`)}>sellers</Button>
               </Button.Group>
@@ -128,11 +134,10 @@ const Shops: React.FC = () => {
                   description="Are you sure to delete this shop?"
                   okText="Yes"
                   cancelText="No"
-                >
-                  <Button danger type="primary" onClick={() => console.log(`[DELETE] = ${id}`)}>
-                    Delete
-                  </Button>
-                </Popconfirm>
+                ></Popconfirm>
+                <Button danger type="primary" onClick={() => remove(id)}>
+                  Delete
+                </Button>
               </Button.Group>
             )
           }
