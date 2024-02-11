@@ -1,5 +1,6 @@
 import { http } from 'services';
-import { IEntity, IForm } from './types';
+import { IApi, IEntity, IForm } from './types';
+import { config } from 'config';
 
 export async function List() {
   const shops: IEntity.Shop[] = await http.get(`/shops`);
@@ -17,10 +18,15 @@ export async function Create(values: IForm.Add) {
   const res = await http.post('/shops', JSON.stringify(values));
   return res;
 }
-export async function Delete(shopId: string) {
-  const res = await http.delete(`/shops/${shopId}`);
-  return res;
-}
+// export async function Delete(shopId: string) {
+//   const res = await http.delete(`/shops/${shopId}`);
+//   return res;
+// }
+
+
+export const Delete = ( { token,id }: IApi.Delete.Request) =>
+  http.delete(`/shops/${id}`, { headers: { [config.api.tokenKEY]: token } });
+
 export async function Update({ id, ...body }: IForm.Update) {
   const res = await http.patch(`/shops/${id}`, JSON.stringify(body));
 

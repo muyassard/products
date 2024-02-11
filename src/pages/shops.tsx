@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Modal, Popconfirm, Table } from 'antd';
 import { useList } from 'modules/shops/hooks';
-import { Update } from 'modules/shops/shop';
+import { Create, Delete, Update } from 'modules/shops/shop';
 import { values } from 'lodash';
-import { IEntity } from 'modules/shops/types';
+import { IEntity, IForm } from 'modules/shops/types';
+import { config } from 'config';
 
 const Shops: React.FC = () => {
   const { isLoading, shops, refetch } = useList();
@@ -16,8 +17,14 @@ const Shops: React.FC = () => {
   const addShop = () => {
     setState(prev => ({ ...prev, isModalOpen: true }));
   };
+  
+  const remove = (id: any) => {
+    console.log(`[DELETE] = ${id}`);
+    Delete(id);
+    refetch();
+  };
 
-  const edit = (id: any) => {
+  const edit = (id: string) => {
     // setState(prev => ({ ...prev, isModalOpen: true }));
     // console.log(`[EDIT] = ${id}`);
     // const shopdata = shops.filter(shop => shop.id === id);
@@ -104,6 +111,15 @@ const Shops: React.FC = () => {
             dataIndex: 'createdAt'
           },
           {
+            title: 'sellers',
+            dataIndex: 'sellers',
+            render: (sellers: any[], index) => (
+              <Button.Group>
+                <Button onClick={() => console.log(`${sellers}`)}>sellers</Button>
+              </Button.Group>
+            )
+          },
+          {
             title: 'Actions',
             dataIndex: 'id',
             render: (id, record, index) => (
@@ -114,11 +130,10 @@ const Shops: React.FC = () => {
                   description="Are you sure to delete this shop?"
                   okText="Yes"
                   cancelText="No"
-                >
-                  <Button danger type="primary" onClick={() => console.log(`[DELETE] = ${id}`)}>
-                    Delete
-                  </Button>
-                </Popconfirm>
+                ></Popconfirm>
+                <Button danger type="primary" onClick={() => remove(id)}>
+                  Delete
+                </Button>
               </Button.Group>
             )
           }

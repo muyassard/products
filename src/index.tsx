@@ -5,6 +5,12 @@ import { Containers } from 'modules/auth';
 import Routes from 'routes';
 
 import 'assets/styles/tailwind.css';
+import axios from 'axios';
+
+axios.interceptors.request.use(req => {
+  console.log(req);
+  return req;
+});
 
 const root = createRoot(document.getElementById('root')!);
 
