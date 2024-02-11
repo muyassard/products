@@ -8,7 +8,7 @@ export namespace IEntity {
     phone: string;
     number: string;
     sellers: Seller[];
-    createdAt: string;//
+    createdAt: string; //
   }
 
   export interface Seller {
@@ -21,15 +21,15 @@ export namespace IEntity {
 
 export namespace IForm {
   export interface Add {
-    title: string ;
+    title: string;
     location: string;
     phone: string;
     number: string;
   }
-  export interface Delete {}
-  export interface Update extends Partial<Omit<IEntity.Shop, "createdAt">> {}
-
-
+  export interface Delete {
+    
+  }
+  export interface Update extends Partial<Omit<IEntity.Shop, 'createdAt'>> {}
 }
 
 export namespace IApi {
@@ -61,7 +61,7 @@ export namespace IApi {
     }
     export interface Response {}
   }
-  
+
   export namespace Delete {
     export interface Request extends IForm.Delete {
       token: string;

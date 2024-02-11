@@ -22,7 +22,7 @@ export async function Delete(shopId: string) {
   return res;
 }
 export async function Update({ id, ...body }: IForm.Update) {
-  const res = await http.patch(`/todos/${id}`, JSON.stringify(body));
-  
+  const res = await http.patch(`/shops/${id}`, JSON.stringify(body));
+
   return res;
 }

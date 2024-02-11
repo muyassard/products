@@ -39,7 +39,7 @@ export const useList = () => {
         headers: { 'x-auth-token': config.api.tokenKEY }
       });
       setState(prev => ({ isLoading: false, shops: data.data }));
-      message.success('...');
+      message.success('... 😊');
     } catch (error) {
       setState(prev => ({ ...prev, isLoading: false }));
     }
