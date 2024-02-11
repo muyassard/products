@@ -1,5 +1,3 @@
-import { StandardResponse } from '@types';
-
 export namespace IEntity {
   export interface User {
     id: string;
@@ -22,19 +20,25 @@ export namespace IForm {
 export namespace IApi {
   export namespace Login {
     export interface Request extends IForm.Login {}
-    export interface Response extends StandardResponse<{ token: string }> {}
+    export type Response = {
+      [x: string]: any;
+    };
   }
 
   export namespace Register {
     export interface Request extends IForm.Register {}
-    export interface Response extends StandardResponse<IEntity.User> {}
+    export type Response = {
+      [x: string]: any;
+    };
   }
 
   export namespace Me {
     export interface Request {
       token: string;
     }
-    export interface Response extends StandardResponse<IEntity.User> {}
+    export type Response = {
+      [x: string]: any;
+    };
   }
 }
 

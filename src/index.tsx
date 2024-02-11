@@ -3,27 +3,19 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { Containers } from 'modules/auth';
 import Routes from 'routes';
+import { QueryParamProvider } from 'use-query-params';
+import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
 
 import 'assets/styles/tailwind.css';
-import axios from 'axios';
 
-axios.interceptors.request.use(
-  (config) => {
-    // Modify the request configuration or add headers
-    config.headers.Authorization = `Bearer `;
-    return config;
-  },
-  (error) => {
-    // Handle request errors
-    return Promise.reject(error);
-  }
-);
 const root = createRoot(document.getElementById('root')!);
 
 root.render(
   <BrowserRouter>
-    <Containers.Auth>
-      <Routes />
-    </Containers.Auth>
+    <QueryParamProvider adapter={ReactRouter6Adapter}>
+      <Containers.Auth>
+        <Routes />
+      </Containers.Auth>
+    </QueryParamProvider>
   </BrowserRouter>
 );

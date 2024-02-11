@@ -3,7 +3,7 @@ import { session } from 'services';
 import { IEntity } from '../types';
 import { Spin } from 'antd';
 import { AuthContext } from '../context';
-import { Api } from '..';
+import { Api, Mappers } from '..';
 
 interface AuthProps {
   children: React.ReactNode;
@@ -24,11 +24,11 @@ const Auth: React.FC<AuthProps> = ({ children }) => {
 
   React.useEffect(() => {
     if (!loading) return;
-    
+
     const token = session.get();
     Api.Me({ token })
       .then(({ data }) => {
-        const user = data.data;
+        const user = Mappers.User(data);
         login(user);
         setLoading(false);
       })
