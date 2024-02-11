@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Modal, Popconfirm, Table } from 'antd';
 import { useList } from 'modules/shops/hooks';
-import { Create, Update } from 'modules/shops/shop';
+import { Update } from 'modules/shops/shop';
 import { values } from 'lodash';
-import { IEntity, IForm } from 'modules/shops/types';
+import { IEntity } from 'modules/shops/types';
 
 const Shops: React.FC = () => {
   const { isLoading, shops, refetch } = useList();
@@ -13,19 +13,15 @@ const Shops: React.FC = () => {
     shopdata: null
   });
 
-  const addShop = (values: any) => {
-    setState(prev => ({ ...prev, isModalOpen: false }));
-    console.log(values);
-    Create(values);
-    refetch();
+  const addShop = () => {
+    setState(prev => ({ ...prev, isModalOpen: true }));
   };
 
-
-  const edit = (id: string) => {
+  const edit = (id: any) => {
     // setState(prev => ({ ...prev, isModalOpen: true }));
     // console.log(`[EDIT] = ${id}`);
     // const shopdata = shops.filter(shop => shop.id === id);
-    console.log(shops);
+    // console.log(shops);
     // console.log(shopdata[0]);
     // setState(prev => ({ ...prev, shopdata: shopdata[0] }));
     // console.log(state.shopdata);
@@ -51,33 +47,32 @@ const Shops: React.FC = () => {
     <>
       <div className="flex justify-between">
         <h2 className="text-white">Shops</h2>
-        <Button onClick={() => setState(prev => ({ ...prev, isModalOpen: true }))}>Add</Button>
+        <Button onClick={() => addShop()}>Add</Button>
       </div>
       <>
         <Modal
           title="Basic Modal"
           open={state.isModalOpen}
-          footer={null}
+          onOk={() => setState(prev => ({ ...prev, isModalOpen: false }))}
           onCancel={() => setState(prev => ({ ...prev, isModalOpen: false }))}
           styles={modalStyles}
         >
-          <Form onFinish={values => addShop(values)}>
+          <Form
+            onFinish={() => {
+              console.log(values);
+            }}
+          >
             <Form.Item label="Title" name="title">
-              <Input placeholder="title" />
+              <Input defaultValue="title" />
             </Form.Item>
             <Form.Item label="Location" name="location">
-              <Input placeholder="location" />
+              <Input defaultValue="location" />
             </Form.Item>
             <Form.Item label="phone" name="phone">
-              <Input placeholder="phone" />
+              <Input defaultValue="phone" />
             </Form.Item>
             <Form.Item label="number" name="number">
-              <Input placeholder="numer" />
-            </Form.Item>
-            <Form.Item>
-              <Button onClick={() => addShop(values)} htmlType="submit" className="bg-green-300" type="primary">
-                Save
-              </Button>
+              <Input defaultValue="number" />
             </Form.Item>
           </Form>
         </Modal>
@@ -107,15 +102,6 @@ const Shops: React.FC = () => {
           {
             title: 'Created At',
             dataIndex: 'createdAt'
-          },
-          {
-            title: 'sellers',
-            dataIndex: 'sellers',
-            render: (sellers:any[], index) => (
-              <Button.Group>
-                <Button onClick={() => console.log(`${sellers}`)}>sellers</Button>
-              </Button.Group>
-            )
           },
           {
             title: 'Actions',
