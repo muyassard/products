@@ -1,10 +1,7 @@
 import React from 'react';
 import { IEntity } from '../types';
 import { message } from 'antd';
-import { session } from 'services';
 import { Api, Mappers } from '..';
-import axios from 'axios';
-import { config } from 'config';
 
 interface IState {
   isLoading: boolean;
@@ -20,8 +17,8 @@ export const useList = () => {
   React.useEffect(() => {
     async function load() {
       try {
-        const { data } = await Api.List({ token: session.get() });
-        const shops = (data.data || []).map(Mappers.Shop);
+        const { data } = await Api.List();
+        const shops = (data || []).map(Mappers.Shop);
         setState({ shops, isLoading: false });
       } catch (err) {
         setState({ shops: [], isLoading: false });
@@ -31,19 +28,7 @@ export const useList = () => {
     load();
   }, []);
 
-  const refetch = async () => {
-    try {
-      setState(prev => ({ ...prev, isLoading: true }));
-
-      const { data } = await axios.get(config.api.baseURL + '/shops', {
-        headers: { 'x-auth-token': config.api.tokenKEY }
-      });
-      setState(prev => ({ isLoading: false, shops: data.data }));
-      message.success('... 😊');
-    } catch (error) {
-      setState(prev => ({ ...prev, isLoading: false }));
-    }
-  };
+  const refetch = () => {};
 
   return { ...state, refetch };
 };

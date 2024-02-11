@@ -1,2 +1,2 @@
-export { http } from './http';
+export { default as http } from './http';
 export { session } from './session';

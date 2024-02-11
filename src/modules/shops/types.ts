@@ -1,5 +1,3 @@
-import { StandardResponse } from '@types';
-
 export namespace IEntity {
   export interface Shop {
     id: string;
@@ -8,7 +6,7 @@ export namespace IEntity {
     phone: string;
     number: string;
     sellers: Seller[];
-    createdAt: string; //
+    createdAt: string;
   }
 
   export interface Seller {
@@ -20,37 +18,21 @@ export namespace IEntity {
 }
 
 export namespace IForm {
-  export interface Add {
-    
-    title: string; 
-    location: string;
-    phone: string;
-    number: string;
-  }
-  export interface Delete {
-    title: string;
-    location: string;
-    phone: string;
-    number: string;
-    
-  }
-  export interface Update extends Partial<Omit<IEntity.Shop, 'createdAt'>> {}
+  export interface Add {}
+  export interface Update {}
+  export interface Delete {}
 }
 
 export namespace IApi {
   export namespace List {
-    export interface Request {
-      token: string;
-    }
-    export interface Response extends StandardResponse<IEntity.Shop[]> {}
+    export type Response = IEntity.Shop[];
   }
 
   export namespace Single {
     export interface Request {
-      token: string;
       shopId: string;
     }
-    export interface Response extends StandardResponse<IEntity.Shop> {}
+    export interface Response extends IEntity.Shop {}
   }
 
   export namespace Add {
@@ -70,7 +52,6 @@ export namespace IApi {
   export namespace Delete {
     export interface Request extends IForm.Delete {
       token: string;
-      id:string;
     }
     export interface Response {}
   }
