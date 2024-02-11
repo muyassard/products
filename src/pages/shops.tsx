@@ -14,11 +14,8 @@ const Shops: React.FC = () => {
     shopdata: null
   });
 
-  const addShop = (values: any) => {
-    setState(prev => ({ ...prev, isModalOpen: false }));
-    console.log(values);
-    Create(values);
-    refetch();
+  const addShop = () => {
+    setState(prev => ({ ...prev, isModalOpen: true }));
   };
 
   const remove = (id: any) => {
@@ -31,7 +28,7 @@ const Shops: React.FC = () => {
     // setState(prev => ({ ...prev, isModalOpen: true }));
     // console.log(`[EDIT] = ${id}`);
     // const shopdata = shops.filter(shop => shop.id === id);
-    console.log(shops); 
+    console.log(shops);
     // console.log(shopdata[0]);
     // setState(prev => ({ ...prev, shopdata: shopdata[0] }));
     // console.log(state.shopdata);
@@ -57,33 +54,32 @@ const Shops: React.FC = () => {
     <>
       <div className="flex justify-between">
         <h2 className="text-white">Shops</h2>
-        <Button onClick={() => setState(prev => ({ ...prev, isModalOpen: true }))}>Add</Button>
+        <Button onClick={() => addShop()}>Add</Button>
       </div>
       <>
         <Modal
           title="Basic Modal"
           open={state.isModalOpen}
-          footer={null}
+          onOk={() => setState(prev => ({ ...prev, isModalOpen: false }))}
           onCancel={() => setState(prev => ({ ...prev, isModalOpen: false }))}
           styles={modalStyles}
         >
-          <Form onFinish={values => addShop(values)}>
+          <Form
+            onFinish={() => {
+              console.log(values);
+            }}
+          >
             <Form.Item label="Title" name="title">
-              <Input placeholder="title" />
+              <Input defaultValue="title" />
             </Form.Item>
             <Form.Item label="Location" name="location">
-              <Input placeholder="location" />
+              <Input defaultValue="location" />
             </Form.Item>
             <Form.Item label="phone" name="phone">
-              <Input placeholder="phone" />
+              <Input defaultValue="phone" />
             </Form.Item>
             <Form.Item label="number" name="number">
-              <Input placeholder="numer" />
-            </Form.Item>
-            <Form.Item>
-              <Button onClick={() => addShop(values)} htmlType="submit" className="bg-green-300" type="primary">
-                Save
-              </Button>
+              <Input defaultValue="number" />
             </Form.Item>
           </Form>
         </Modal>
