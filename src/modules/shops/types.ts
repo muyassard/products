@@ -21,13 +21,18 @@ export namespace IEntity {
 
 export namespace IForm {
   export interface Add {
-    title: string;
+    
+    title: string; 
     location: string;
     phone: string;
     number: string;
   }
   export interface Delete {
-    id: string;
+    title: string;
+    location: string;
+    phone: string;
+    number: string;
+    
   }
   export interface Update extends Partial<Omit<IEntity.Shop, 'createdAt'>> {}
 }
@@ -65,6 +70,7 @@ export namespace IApi {
   export namespace Delete {
     export interface Request extends IForm.Delete {
       token: string;
+      id:string;
     }
     export interface Response {}
   }

@@ -8,27 +8,30 @@ import { config } from 'config';
 
 const Shops: React.FC = () => {
   const { isLoading, shops, refetch } = useList();
-
+  
   const [state, setState] = useState<{ isModalOpen: boolean; shopdata: IEntity.Shop | null }>({
     isModalOpen: false,
     shopdata: null
   });
 
-  const addShop = () => {
-    setState(prev => ({ ...prev, isModalOpen: true }));
+  const addShop = (value:any) => {
+    setState(prev => ({ ...prev, isModalOpen: false }));
+    console.log(value);
+    Create(value); 
+    // refetch();
   };
-
+  
   const remove = (id: any) => {
-    console.log(`[DELETE] = ${id}`);
+    console.log(`[DELETE] = ${id}`); 
     Delete(id);
     refetch();
   };
 
   const edit = (id: string) => {
+    console.log(shops);
     // setState(prev => ({ ...prev, isModalOpen: true }));
     // console.log(`[EDIT] = ${id}`);
     // const shopdata = shops.filter(shop => shop.id === id);
-    console.log(shops);
     // console.log(shopdata[0]);
     // setState(prev => ({ ...prev, shopdata: shopdata[0] }));
     // console.log(state.shopdata);
@@ -54,37 +57,43 @@ const Shops: React.FC = () => {
     <>
       <div className="flex justify-between">
         <h2 className="text-white">Shops</h2>
-        <Button onClick={() => addShop()}>Add</Button>
+        <Button onClick={() => setState(prev => ({ ...prev, isModalOpen: true }))}>Add</Button>
       </div>
       <>
         <Modal
           title="Basic Modal"
+          footer={false}
           open={state.isModalOpen}
           onOk={() => setState(prev => ({ ...prev, isModalOpen: false }))}
           onCancel={() => setState(prev => ({ ...prev, isModalOpen: false }))}
           styles={modalStyles}
         >
           <Form
-            onFinish={() => {
-              console.log(values);
+            onFinish={value => {
+              addShop(value);
             }}
           >
-            <Form.Item label="Title" name="title">
-              <Input defaultValue="title" />
+            <Form.Item label="title" name="title">
+              <Input placeholder="title" />
             </Form.Item>
-            <Form.Item label="Location" name="location">
-              <Input defaultValue="location" />
+            <Form.Item label="location" name="location">
+              <Input placeholder="location" />
             </Form.Item>
             <Form.Item label="phone" name="phone">
-              <Input defaultValue="phone" />
+              <Input placeholder="phone" />
             </Form.Item>
             <Form.Item label="number" name="number">
-              <Input defaultValue="number" />
+              <Input placeholder="number" />
+            </Form.Item>
+            <Form.Item>
+              <Button  htmlType="submit" className="bg-green-300" type="primary">
+                Save
+              </Button>
             </Form.Item>
           </Form>
         </Modal>
       </>
-      
+
       <Table
         loading={isLoading}
         dataSource={shops}
@@ -113,9 +122,9 @@ const Shops: React.FC = () => {
           {
             title: 'sellers',
             dataIndex: 'sellers',
-            render: (sellers: any[], index) => (
+            render: (sellers, index) => (
               <Button.Group>
-                <Button onClick={() => console.log(`${sellers}`)}>sellers</Button>
+                <Button onClick={() => console.log(`sellers = ${sellers}`)}>sellers</Button>
               </Button.Group>
             )
           },
@@ -130,10 +139,11 @@ const Shops: React.FC = () => {
                   description="Are you sure to delete this shop?"
                   okText="Yes"
                   cancelText="No"
-                ></Popconfirm>
-                <Button danger type="primary" onClick={() => remove(id)}>
-                  Delete
-                </Button>
+                >
+                  <Button danger type="primary" onClick={() => remove(id)}>
+                    Delete
+                  </Button>
+                </Popconfirm>
               </Button.Group>
             )
           }
