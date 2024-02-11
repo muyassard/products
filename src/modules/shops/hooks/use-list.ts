@@ -2,6 +2,8 @@ import React from 'react';
 import { IEntity } from '../types';
 import { message } from 'antd';
 import { Api, Mappers } from '..';
+import { http, session } from 'services';
+import { config } from 'config';
 
 interface IState {
   isLoading: boolean;
@@ -28,8 +30,19 @@ export const useList = () => {
     load();
   }, []);
 
-  const refetch = () => {};
+  const refetch = async () => {
+    try {
+      const { data } = await Api.List();
+      const shops = (data || []).map(Mappers.Shop);
+      setState({ shops, isLoading: false });
 
+      message.success('fetched data');
+    } catch (error) {
+      message.error('not is fetching data');
+    } finally {
+      setState(prev=>({...prev, isLoading: false }));
+    }
+  };
   return { ...state, refetch };
 };
 

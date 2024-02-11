@@ -158,13 +158,35 @@
 // export default Shops;
 
 import React from 'react';
-import { Button, Modal, Popconfirm, Table } from 'antd';
+import { Button, Form, Input, Modal, Popconfirm, Table } from 'antd';
 import { useList } from 'modules/shops/hooks';
 import { StringParam, useQueryParam } from 'use-query-params';
+import { Create, Delete, Update } from 'modules/shops/shop';
+import { IApi, IForm } from 'modules/shops/types';
 
 const Shops: React.FC = () => {
-  const { isLoading, shops } = useList();
+  const { isLoading, shops, refetch } = useList();
   const [shopId, setShopId] = useQueryParam('shopId', StringParam);
+
+  const addShop = (value: IApi.Add.Request) => {
+    console.log(value);
+    Create(value);
+    refetch();
+  };
+  const remove = (id: any) => {
+    console.log(`[DELETE] = ${id}`);
+    Delete(id);
+    refetch();
+  };
+
+  const edit = (id: string) => {
+    console.log(shops);
+    console.log(`[EDIT] = ${id}`);
+    const shopdata = shops.filter(shop => shop.id === id);
+    console.log(shopdata[0]);
+    // const update = Update({id,...shopdata});
+    refetch();
+  };
 
   return (
     <>
@@ -198,6 +220,15 @@ const Shops: React.FC = () => {
             dataIndex: 'createdAt'
           },
           {
+            title: 'sellers',
+            dataIndex: 'sellers',
+            render: (sellers, index) => (
+              <Button.Group>
+                <Button onClick={() => console.log(`sellers = ${sellers}`)}>sellers</Button>
+              </Button.Group>
+            )
+          },
+          {
             title: 'Actions',
             dataIndex: 'id',
             render: id => (
@@ -206,6 +237,8 @@ const Shops: React.FC = () => {
                 <Popconfirm
                   title="Delete the shop"
                   description="Are you sure to delete this shop?"
+                  onConfirm={() => remove(id)}
+                  onCancel={() => console.log('no')}
                   okText="Yes"
                   cancelText="No"
                 >
@@ -218,8 +251,60 @@ const Shops: React.FC = () => {
           }
         ]}
       />
-      <Modal open={!!shopId} className="p-0" footer={null} closeIcon={false} onCancel={() => setShopId(undefined)}>
-        {shopId === 'new' ? <h1>Add Component</h1> : <h1>Edit Component</h1>}
+      <Modal open={!!shopId} className="p-0" footer={null} onCancel={() => setShopId(undefined)}>
+        {shopId === 'new' ? (
+          <>
+            <Form
+              onFinish={value => {
+                addShop(value);
+              }}
+            >
+              <Form.Item label="title" name="title">
+                <Input placeholder="title" />
+              </Form.Item>
+              <Form.Item label="location" name="location">
+                <Input placeholder="location" />
+              </Form.Item>
+              <Form.Item label="phone" name="phone">
+                <Input placeholder="phone" />
+              </Form.Item>
+              <Form.Item label="number" name="number">
+                <Input placeholder="number" />
+              </Form.Item>
+              <Form.Item>
+                <Button htmlType="submit" className="bg-green-300" type="primary">
+                  Save
+                </Button>
+              </Form.Item>
+            </Form>
+          </>
+        ) : (
+          <>
+            <Form
+              onFinish={value => {
+                addShop(value);
+              }}
+            >
+              <Form.Item label="title" name="title">
+                <Input placeholder="title" />
+              </Form.Item>
+              <Form.Item label="location" name="location">
+                <Input placeholder="location" />
+              </Form.Item>
+              <Form.Item label="phone" name="phone">
+                <Input placeholder="phone" />
+              </Form.Item>
+              <Form.Item label="number" name="number">
+                <Input placeholder="number" />
+              </Form.Item>
+              <Form.Item>
+                <Button htmlType="submit" className="bg-green-300" type="primary">
+                  Save
+                </Button>
+              </Form.Item>
+            </Form>
+          </>
+        )}
       </Modal>
     </>
   );

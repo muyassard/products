@@ -18,15 +18,20 @@ export namespace IEntity {
 }
 
 export namespace IForm {
-  export interface Add {}
-  export interface Update {
-    firstName: string;
-    lastName: string;
+  export interface Add {
+    title: string;
+    location: string;
     phone: string;
-    password: string;
+    number: string;
+
+    
+  }
+  export interface Update {
 
   }
-  export interface Delete {}
+  export interface Delete {
+    id:string;
+  }
 }
 
 export namespace IApi {
@@ -59,7 +64,6 @@ export namespace IApi {
 
   export namespace Delete {
     export interface Request extends IForm.Delete {
-      id:string;
       token: string;
     }
     export interface Response {}

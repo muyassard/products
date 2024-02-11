@@ -1,5 +1,5 @@
 import { http, session } from 'services';
-import { IApi, IEntity, IForm } from './types';
+import { IApi, IEntity } from './types';
 import { config } from 'config';
 
 export async function List(): Promise<IEntity.Shop[]> {
@@ -13,17 +13,17 @@ export async function Single(shopId: IApi.Single.Request): Promise<IEntity.Shop>
   return shop;
 }
 
-export async function Create({ token, ...value }: IApi.Add.Request): Promise<any> {
-  const res = await http.post('/shops', value, { headers: { [config.api.tokenKEY]: session.get() } });
+export async function Create({ token, ...value }: IApi.Add.Request) {
+  const res = await http.post('/shops', value,{ headers: { [config.api.tokenKEY]: session.get() } });
   return res;
 }
 
-export const Delete = async ({ token, id }: IApi.Delete.Request): Promise<any> => {
-  const res = await http.delete(`/shops/${id}`, { headers: { [config.api.tokenKEY]: token } });
+export const Delete = async ({id }: IApi.Delete.Request) => {
+  const res = await http.delete(`/shops/${id}`, { headers: { [config.api.tokenKEY]: session.get() } });
   return res;
 };
 
 export async function Update({ id, ...body }: IApi.Update.Request): Promise<any> {
-  const res = await http.patch(`/shops/${id}`, JSON.stringify(body));
+  const res = await http.patch(`/shops/${id}`, body);
   return res;
 }
