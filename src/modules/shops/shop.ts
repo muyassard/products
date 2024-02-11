@@ -19,10 +19,6 @@ export async function Create({ token, ...values }: IApi.Add.Request) {
   return res;
 }
 
-// export async function Create( token:string,data:any ) {
-//   const res = await http.post('/shops',data, { headers: { [config.api.tokenKEY]: token } });
-//   return res;
-// }
 
 export const Delete = ({ token, id }: IApi.Delete.Request) =>
   http.delete(`/shops/${id}`, { headers: { [config.api.tokenKEY]: token } });
