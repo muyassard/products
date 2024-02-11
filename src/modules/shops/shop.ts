@@ -15,16 +15,11 @@ export async function Single(shopId: string) {
 }
 
 export async function Create(values: IForm.Add) {
-  const res = await http.post('/shops', JSON.stringify(values));
+  const res = await http.post('/shops');
   return res;
 }
-// export async function Delete(shopId: string) {
-//   const res = await http.delete(`/shops/${shopId}`);
-//   return res;
-// }
 
-
-export const Delete = ( { token,id }: IApi.Delete.Request) =>
+export const Delete = ({ token, id }: IApi.Delete.Request) =>
   http.delete(`/shops/${id}`, { headers: { [config.api.tokenKEY]: token } });
 
 export async function Update({ id, ...body }: IForm.Update) {

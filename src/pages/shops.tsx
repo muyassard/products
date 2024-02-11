@@ -20,7 +20,7 @@ const Shops: React.FC = () => {
     Create(values);
     refetch();
   };
-  
+
   const remove = (id: any) => {
     console.log(`[DELETE] = ${id}`);
     Delete(id);
@@ -31,7 +31,7 @@ const Shops: React.FC = () => {
     // setState(prev => ({ ...prev, isModalOpen: true }));
     // console.log(`[EDIT] = ${id}`);
     // const shopdata = shops.filter(shop => shop.id === id);
-    console.log(shops);
+    console.log(shops); 
     // console.log(shopdata[0]);
     // setState(prev => ({ ...prev, shopdata: shopdata[0] }));
     // console.log(state.shopdata);
@@ -88,7 +88,7 @@ const Shops: React.FC = () => {
           </Form>
         </Modal>
       </>
-
+      
       <Table
         loading={isLoading}
         dataSource={shops}

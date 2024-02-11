@@ -7,11 +7,17 @@ import Routes from 'routes';
 import 'assets/styles/tailwind.css';
 import axios from 'axios';
 
-axios.interceptors.request.use(req => {
-  console.log(req);
-  return req;
-});
-
+axios.interceptors.request.use(
+  (config) => {
+    // Modify the request configuration or add headers
+    config.headers.Authorization = `Bearer `;
+    return config;
+  },
+  (error) => {
+    // Handle request errors
+    return Promise.reject(error);
+  }
+);
 const root = createRoot(document.getElementById('root')!);
 
 root.render(
