@@ -5,24 +5,26 @@ import { Create, Delete, Update } from 'modules/shops/shop';
 import { values } from 'lodash';
 import { IEntity, IForm } from 'modules/shops/types';
 import { config } from 'config';
+import { session } from 'services';
+// const token = session.get()
 
 const Shops: React.FC = () => {
   const { isLoading, shops, refetch } = useList();
-  
+
   const [state, setState] = useState<{ isModalOpen: boolean; shopdata: IEntity.Shop | null }>({
     isModalOpen: false,
     shopdata: null
   });
 
-  const addShop = (value:any) => {
+  const addShop = (value: any) => {
     setState(prev => ({ ...prev, isModalOpen: false }));
     console.log(value);
-    Create(value); 
-    // refetch();
+    Create(value);
+    refetch();
   };
-  
+
   const remove = (id: any) => {
-    console.log(`[DELETE] = ${id}`); 
+    console.log(`[DELETE] = ${id}`);
     Delete(id);
     refetch();
   };
@@ -86,7 +88,7 @@ const Shops: React.FC = () => {
               <Input placeholder="number" />
             </Form.Item>
             <Form.Item>
-              <Button  htmlType="submit" className="bg-green-300" type="primary">
+              <Button htmlType="submit" className="bg-green-300" type="primary">
                 Save
               </Button>
             </Form.Item>

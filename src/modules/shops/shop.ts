@@ -1,4 +1,4 @@
-import { http } from 'services';
+import { http, session } from 'services';
 import { IApi, IEntity, IForm } from './types';
 import { config } from 'config';
 
@@ -14,13 +14,17 @@ export async function Single(shopId: string): Promise<IEntity.Shop> {
   return shop;
 }
 
-export async function Create({ token,...values }:IApi.Add.Request ) {
-  const res = await http.post('/shops',JSON.stringify(values), { headers: { [config.api.tokenKEY]: token } });
-  return res; 
+export async function Create({ token, ...values }: IApi.Add.Request) {
+  const res = await http.post('/shops', values, { headers: { [config.api.tokenKEY]: session.get() } });
+  return res;
 }
 
+// export async function Create( token:string,data:any ) {
+//   const res = await http.post('/shops',data, { headers: { [config.api.tokenKEY]: token } });
+//   return res;
+// }
 
-export const Delete = ( { token,id }: IApi.Delete.Request) =>
+export const Delete = ({ token, id }: IApi.Delete.Request) =>
   http.delete(`/shops/${id}`, { headers: { [config.api.tokenKEY]: token } });
 
 export async function Update({ id, ...body }: IForm.Update) {
