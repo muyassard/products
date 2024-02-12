@@ -27,7 +27,7 @@ const Main: React.FC = () => {
   return (
     <>
       <div className="flex justify-between">
-        <h2 className='text-white'>Shops</h2>
+        <h2 className="text-white">Shops</h2>
         <Button onClick={() => setShopId('new')}>Add</Button>
       </div>
       <Table
@@ -61,9 +61,8 @@ const Main: React.FC = () => {
             render: id => (
               <Button.Group>
                 <Button type="primary" onClick={() => setShopId(id)}>
-                  Info
+                  Edit
                 </Button>
-                <Button onClick={() => setShopId(id)}>Edit</Button>
                 <Popconfirm
                   title="Delete the shop"
                   description="Are you sure to delete this shop?"
