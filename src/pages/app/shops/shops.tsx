@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button, Modal, Popconfirm, Table } from 'antd';
+import { Button, Modal, Popconfirm, Table, Tag } from 'antd';
 import { useList } from 'modules/shops/hooks';
 import { StringParam, useQueryParam } from 'use-query-params';
 import Add from './add';
 import Update from './update';
 import { Api } from 'modules/shops';
+import Single from './single';
 
 const Main: React.FC = () => {
   const { isLoading, shops, isFetching, refetch } = useList();
@@ -13,6 +14,10 @@ const Main: React.FC = () => {
   const onSuccess = () => {
     setShopId(undefined);
     refetch();
+  };
+  const onInfo = (id: string) => {
+    setShopId('info');
+    return id;
   };
 
   const onDelete = async (id: string) => {
@@ -52,6 +57,21 @@ const Main: React.FC = () => {
             dataIndex: 'number'
           },
           {
+            title: 'Sellers',
+            dataIndex: 'sellers',
+            render: (seller, record, index) => (
+              <Tag
+                onClick={() => {
+                  console.log(shops[index]);
+                }}
+                color="grey"
+                className=" cursor-pointer"
+              >
+                seller
+              </Tag>
+            )
+          },
+          {
             title: 'Created At',
             dataIndex: 'createdAt'
           },
@@ -62,6 +82,9 @@ const Main: React.FC = () => {
               <Button.Group>
                 <Button type="primary" onClick={() => setShopId(id)}>
                   Edit
+                </Button>
+                <Button type="primary" onClick={() => onInfo(id)}>
+                  info
                 </Button>
                 <Popconfirm
                   title="Delete the shop"
@@ -80,8 +103,18 @@ const Main: React.FC = () => {
         ]}
       />
       <Modal open={!!shopId} className="p-0" footer={null} closeIcon={false} onCancel={() => setShopId(undefined)}>
-        {shopId === 'new' ? <Add onSuccess={onSuccess} /> : <Update onSuccess={onSuccess} shopId={shopId!} />}
+        {shopId === 'new' ? (
+          <Add onSuccess={onSuccess} />
+        )  : (
+          <Update onSuccess={onSuccess} shopId={shopId!} />
+        )}
       </Modal>
+      <Modal open={false} className="p-0" footer={null} closeIcon={false} >
+        {(
+          <Single shopId={shopId!}/>
+        )}
+      </Modal>
+
     </>
   );
 };

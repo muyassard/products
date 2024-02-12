@@ -8,7 +8,7 @@ interface IState {
   shops: IEntity.Shop[];
   isFetching: boolean;
 }
-
+  
 export const useList = () => {
   const [state, setState] = React.useState<IState>({
     isLoading: false,
