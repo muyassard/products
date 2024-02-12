@@ -1,13 +1,16 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Segmented } from 'antd';
+import { AuthContext } from 'modules/auth/context';
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { user } = React.useContext(AuthContext);
 
   return (
-    <nav className="box-border flex w-full items-center justify-center  px-6 py-2">
+    <nav className="box-border flex w-full items-center justify-between  px-6 py-2">
+      <div className=""></div>
       <Segmented
         size="large"
         value={pathname}
@@ -19,6 +22,7 @@ const Navbar: React.FC = () => {
           { label: 'Payouts', value: '/app/payouts' }
         ]}
       />
+      <h2 className="!m-0 !p-0 font-bold">{user?.firstName || '--'}</h2>
     </nav>
   );
 };
