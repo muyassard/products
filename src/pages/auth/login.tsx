@@ -5,7 +5,7 @@
 // import { session } from 'services';
 
 // import { AuthContext } from 'modules/auth/context';
-  
+
 // const Login: React.FC = () => {
 //   const { login } = React.useContext(AuthContext);
 //   const [isLoading, setIsLoading] = useState<boolean>();
@@ -90,9 +90,9 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="grid h-screen place-items-center">
+    <div className="grid place-items-center  pt-28">
       <div className="container mx-auto flex flex-col items-center">
-        <h1>Login Form</h1>
+        <h1 className="text-white">Login Form</h1>
         <Form onFinish={onFinish} className="flex w-[400px] flex-col gap-2">
           <Form.Item<Types.IForm.Login>
             className="m-0"

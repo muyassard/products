@@ -94,7 +94,7 @@ const Shops: React.FC = () => {
         ]}
       />
 
-      <Modal open={!!shopId} className="p-0" footer={null} onCancel={() => setShopId(undefined)}>
+      <Modal closeIcon={null} open={!!shopId} className="p-0" footer={null} onCancel={() => setShopId(undefined)}>
         {shopId === 'new' ? (
           <>
             <Form
