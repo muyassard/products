@@ -27,7 +27,7 @@ const Main: React.FC = () => {
   return (
     <>
       <div className="flex justify-between">
-        <h2>Shops</h2>
+        <h2 className='text-white'>Shops</h2>
         <Button onClick={() => setShopId('new')}>Add</Button>
       </div>
       <Table
