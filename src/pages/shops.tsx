@@ -163,6 +163,7 @@ import { useList } from 'modules/shops/hooks';
 import { StringParam, useQueryParam } from 'use-query-params';
 import { Create, Delete, Update } from 'modules/shops/shop';
 import { IApi, IForm } from 'modules/shops/types';
+import { session } from 'services';
 
 const Shops: React.FC = () => {
   const { isLoading, shops, refetch } = useList();
@@ -175,9 +176,11 @@ const Shops: React.FC = () => {
   };
   const remove = (id: any) => {
     console.log(`[DELETE] = ${id}`);
-    Delete(id);
+    Delete(id,session.get());
     refetch();
   };
+
+
 
   const edit = (id: string) => {
     console.log(shops);
@@ -229,15 +232,15 @@ const Shops: React.FC = () => {
             )
           },
           {
-            title: 'Actions',
+            title: 'Actions', 
             dataIndex: 'id',
             render: id => (
               <Button.Group>
                 <Button onClick={() => setShopId(id)}>Edit</Button>
-                <Popconfirm
+                <Popconfirm 
                   title="Delete the shop"
                   description="Are you sure to delete this shop?"
-                  onConfirm={() => remove(id)}
+                  onConfirm={() => remove(id)} 
                   onCancel={() => console.log('no')}
                   okText="Yes"
                   cancelText="No"
@@ -251,7 +254,9 @@ const Shops: React.FC = () => {
           }
         ]}
       />
-      <Modal closeIcon={null} open={!!shopId} className="p-0" footer={null} onCancel={() => setShopId(undefined)}>
+      
+
+      <Modal open={!!shopId} className="p-0" footer={null} onCancel={() => setShopId(undefined)}>
         {shopId === 'new' ? (
           <>
             <Form
