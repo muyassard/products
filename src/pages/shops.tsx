@@ -176,11 +176,9 @@ const Shops: React.FC = () => {
   };
   const remove = (id: any) => {
     console.log(`[DELETE] = ${id}`);
-    Delete(id,session.get());
+    Delete(id, session.get());
     refetch();
   };
-
-
 
   const edit = (id: string) => {
     console.log(shops);
@@ -194,7 +192,7 @@ const Shops: React.FC = () => {
   return (
     <>
       <div className="flex justify-between">
-        <h2>Shops</h2>
+        <h2 className="text-white">Shops</h2>
         <Button onClick={() => setShopId('new')}>Add</Button>
       </div>
       <Table
@@ -232,15 +230,15 @@ const Shops: React.FC = () => {
             )
           },
           {
-            title: 'Actions', 
+            title: 'Actions',
             dataIndex: 'id',
             render: id => (
               <Button.Group>
                 <Button onClick={() => setShopId(id)}>Edit</Button>
-                <Popconfirm 
+                <Popconfirm
                   title="Delete the shop"
                   description="Are you sure to delete this shop?"
-                  onConfirm={() => remove(id)} 
+                  onConfirm={() => remove(id)}
                   onCancel={() => console.log('no')}
                   okText="Yes"
                   cancelText="No"
@@ -254,9 +252,8 @@ const Shops: React.FC = () => {
           }
         ]}
       />
-      
 
-      <Modal open={!!shopId} className="p-0" footer={null} onCancel={() => setShopId(undefined)}>
+      <Modal closeIcon={null} open={!!shopId} className="p-0" footer={null} onCancel={() => setShopId(undefined)}>
         {shopId === 'new' ? (
           <>
             <Form
