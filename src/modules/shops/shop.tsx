@@ -14,12 +14,12 @@ export async function Single(shopId: IApi.Single.Request): Promise<IEntity.Shop>
 }
 
 export async function Create({ token, ...value }: IApi.Add.Request) {
-  const res = await http.post('/shops', value,{ headers: { [config.api.tokenKEY]: session.get() } });
+  const res = await http.post('/shops', value);
   return res;
 }
 
-export const Delete = async ({id }: IApi.Delete.Request) => {
-  const res = await http.delete(`/shops/${id}`, { headers: { [config.api.tokenKEY]: session.get() } });
+export const Delete = async ( id:string, token :string) => {
+  const res = await http.delete(`/shops/${id}`, { headers: { [config.api.tokenKEY]: token } });
   return res;
 };
 
