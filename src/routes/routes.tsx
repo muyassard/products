@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 
-import { Auth, Dashboard, Shops, Purchases, Payouts } from 'pages';
+import { Auth, App } from 'pages';
 import Protected from './protected';
 import { AuthContext } from 'modules/auth/context';
 import { Main } from 'layouts';
@@ -13,10 +13,10 @@ const Routes: React.FC = () => {
   return (
     <Switch>
       <Route path="app" element={<Protected Layout={Main} allow={isAuthenticated} to="/auth/login" />}>
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="shops" element={<Shops />} />
-        <Route path="purchases" element={<Purchases />} />
-        <Route path="payouts" element={<Payouts />} />
+        <Route path="dashboard" element={<App.Dashboard />} />
+        <Route path="shops" element={<App.Shops />} />
+        <Route path="purchases" element={<App.Purchases />} />
+        <Route path="payouts" element={<App.Payouts />} />
 
         <Route index path="*" element={<Navigate to="/app/dashboard" />} />
       </Route>
