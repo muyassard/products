@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Popconfirm, Table, Tag } from 'antd';
 import { useList } from 'modules/shops/hooks';
 import { StringParam, useQueryParam } from 'use-query-params';
@@ -10,13 +10,16 @@ import Single from './single';
 const Main: React.FC = () => {
   const { isLoading, shops, isFetching, refetch } = useList();
   const [shopId, setShopId] = useQueryParam('shopId', StringParam);
+  const [open, setOpen] = useState(false);
+  const [singleId, setsingleId] = useState('');
 
   const onSuccess = () => {
     setShopId(undefined);
     refetch();
   };
   const onInfo = (id: string) => {
-    setShopId('info');
+    setsingleId(id);
+    setOpen(true);
     return id;
   };
 
@@ -36,6 +39,7 @@ const Main: React.FC = () => {
         <Button onClick={() => setShopId('new')}>Add</Button>
       </div>
       <Table
+        className="w-screen"
         loading={isLoading || isFetching}
         dataSource={shops}
         rowKey="id"
@@ -83,7 +87,12 @@ const Main: React.FC = () => {
                 <Button type="primary" onClick={() => setShopId(id)}>
                   Edit
                 </Button>
-                <Button type="primary" onClick={() => onInfo(id)}>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    onInfo(id);
+                  }}
+                >
                   info
                 </Button>
                 <Popconfirm
@@ -103,18 +112,13 @@ const Main: React.FC = () => {
         ]}
       />
       <Modal open={!!shopId} className="p-0" footer={null} closeIcon={false} onCancel={() => setShopId(undefined)}>
-        {shopId === 'new' ? (
-          <Add onSuccess={onSuccess} />
-        )  : (
-          <Update onSuccess={onSuccess} shopId={shopId!} />
-        )}
+        {shopId === 'new' ? <Add onSuccess={onSuccess} /> : <Update onSuccess={onSuccess} shopId={shopId!} />}
       </Modal>
-      <Modal open={false} className="p-0" footer={null} closeIcon={false} >
-        {(
-          <Single shopId={shopId!}/>
-        )}
+      <Modal open={open!} className="p-0" footer={null} closeIcon={true} onCancel={() => setOpen(false)}>
+        {<Single shopId={singleId} />}
+        <div className="">single</div>
       </Modal>
-
+      ;
     </>
   );
 };
