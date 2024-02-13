@@ -25,6 +25,21 @@ export namespace IForm {
   export interface Delete extends Pick<IEntity.Shop, 'id'> {}
 }
 
+export namespace SellerIApi {
+  export namespace Add {
+    export interface Request extends Omit<IEntity.Seller, 'id'> {}
+    export interface Response extends IEntity.Seller {}
+  }
+
+  export namespace Delete {
+    export interface Request {
+      shopID: string;
+      sellerID:string;
+    }
+    export interface Response extends IEntity.Seller {}
+  }
+}
+
 export namespace IApi {
   export namespace List {
     export interface Request extends Omit<Meta, 'total'> {}

@@ -6,6 +6,7 @@ import Add from './add';
 import Update from './update';
 import { Api } from 'modules/shops';
 import Single from './single';
+import { findIndex } from 'lodash';
 
 const Main: React.FC = () => {
   const [{ page, limit, shopId }, setParams] = useQueryParams({
@@ -26,9 +27,13 @@ const Main: React.FC = () => {
   const onInfo = (id: string) => {
     setsingleId(id);
     setOpen(true);
-    console.log(items);
-    
+
     return id;
+  };
+
+  const getSeller = (index: string) => {
+    console.log(items[0]);
+    console.log(index);
   };
 
   const onDelete = async (id: string) => {
@@ -76,9 +81,9 @@ const Main: React.FC = () => {
           },
           {
             title: 'seller',
-            dataIndex: 'seller', 
-            render: seller => ( 
-              <Tag color="grey" className="cursor-pointer">
+            dataIndex: 'seller',
+            render: index => (
+              <Tag onClick={() => getSeller(index)} color="grey" className="cursor-pointer">
                 seller
               </Tag>
             )
@@ -128,7 +133,6 @@ const Main: React.FC = () => {
       </Modal>
       <Modal open={open!} className="p-0" footer={null} closeIcon={true} onCancel={() => setOpen(false)}>
         {<Single shopId={singleId} />}
-        <div className="">single</div>
       </Modal>
     </>
   );
