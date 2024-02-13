@@ -20,25 +20,21 @@ export namespace IForm {
 export namespace IApi {
   export namespace Login {
     export interface Request extends IForm.Login {}
-    export type Response = {
-      [x: string]: any;
-    };
+    export interface Response {
+      token: string;
+    }
   }
 
   export namespace Register {
     export interface Request extends IForm.Register {}
-    export type Response = {
-      [x: string]: any;
-    };
+    export type Response = IEntity.User;
   }
 
   export namespace Me {
     export interface Request {
       token: string;
     }
-    export type Response = {
-      [x: string]: any;
-    };
+    export type Response = IEntity.User;
   }
 }
 

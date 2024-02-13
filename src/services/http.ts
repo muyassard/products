@@ -16,7 +16,8 @@ http.interceptors.request.use(request => {
 
 http.interceptors.response.use(
   response => {
-    response.data = response.data.data;
+    response.data = response.data.meta ? { items: response.data.data, meta: response.data.meta } : response.data.data;
+
     return response;
   },
   (error: AxiosError<{ message: string }>) => {

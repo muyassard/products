@@ -1,3 +1,5 @@
+import { Meta } from 'types';
+
 export namespace IEntity {
   export interface Shop {
     id: string;
@@ -25,7 +27,12 @@ export namespace IForm {
 
 export namespace IApi {
   export namespace List {
-    export type Response = IEntity.Shop[];
+    export interface Request extends Omit<Meta, 'total'> {}
+
+    export interface Response {
+      items: IEntity.Shop[];
+      meta: Meta;
+    }
   }
 
   export namespace Single {

@@ -1,46 +1,40 @@
 import React from 'react';
-import { IEntity } from '../types';
+import { IApi } from '../types';
 import { message } from 'antd';
 import { Api, Mappers } from '..';
 
-interface IState {
+interface IState extends IApi.List.Response {
   isLoading: boolean;
-  shops: IEntity.Shop[];
-  isFetching: boolean;
 }
-  
-export const useList = () => {
+interface Params extends IApi.List.Request {}
+
+export const useList = (params: Params) => {
   const [state, setState] = React.useState<IState>({
     isLoading: false,
-    isFetching: false,
-    shops: []
-  });
-
-  React.useEffect(() => {
-    async function load() {
-      try {
-        const { data } = await Api.List();
-        const shops = (data || []).map(Mappers.Shop);
-        setState(prev => ({ ...prev, shops, isLoading: false }));
-      } catch (err) {
-        setState(prev => ({ ...prev, shops: [], isLoading: false }));
-        message.error('Failed to load shops');
-      }
+    items: [],
+    meta: {
+      limit: 0,
+      page: 0,
+      total: 0
     }
-    load();
-  }, []);
+  });
 
   const refetch = async () => {
     try {
-      setState(prev => ({ ...prev, isFetching: true }));
-      const { data } = await Api.List();
-      const shops = (data || []).map(Mappers.Shop);
-      setState(prev => ({ ...prev, shops, isFetching: false }));
+      setState(prev => ({ ...prev, isLoading: true }));
+      const { data } = await Api.List(params);
+      const items = (data.items || []).map(Mappers.Shop);
+      const meta = data.meta;
+      setState(prev => ({ ...prev, items, meta, isLoading: false }));
     } catch (err) {
-      setState(prev => ({ ...prev, isFetching: false }));
+      setState(prev => ({ ...prev, isLoading: false }));
       message.error('Failed to load shops');
     }
   };
+
+  React.useEffect(() => {
+    refetch();
+  }, [params]); // HM_0001
 
   return { ...state, refetch };
 };
