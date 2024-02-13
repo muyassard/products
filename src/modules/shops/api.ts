@@ -2,7 +2,7 @@ import { http } from 'services';
 import { IApi } from './types';
 
 export const List = ({ page, limit }: IApi.List.Request) =>
-  http.get<IApi.List.Response>(`/shops?limit=${limit}&page=${page}`);
+  http.get<IApi.List.Response>(`/shops?limit=${limit}&page=${page}`); 
 
 export const Single = ({ id }: IApi.Single.Request) => http.get<IApi.Single.Response>(`/shops/${id}`);
 
