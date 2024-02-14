@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { Button, Modal, Popconfirm, Table, Tag } from 'antd';
+import React from 'react';
+import { Button, Modal, Popconfirm, Table } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { useList } from 'modules/shops/hooks';
 import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
 import Add from './add';
 import Update from './update';
 import { Api } from 'modules/shops';
-import Single from './single';
-import Seller from './seller';
 
 const Main: React.FC = () => {
   const [{ page, limit, shopId }, setParams] = useQueryParams({
@@ -16,28 +15,10 @@ const Main: React.FC = () => {
   });
   const params = React.useMemo(() => ({ page: page!, limit: limit! }), [page, limit]);
   const { isLoading, items, refetch, meta } = useList(params);
-  const [open, setOpen] = useState(false);
-  const [{ singleId, seller, sellershopid }, setState] = useState({
-    singleId: '',
-    seller: false,
-    sellershopid: ''
-  });
 
   const onSuccess = () => {
     setParams({ shopId: undefined });
     refetch();
-  };
-
-  const onInfo = (id: string) => {
-    setState(prev => ({ ...prev, id }));
-    setOpen(true);
-  };
-
-  const getSeller = (index: number) => {
-    setState(prev => ({ ...prev, seller: true }));
-    const seller = items[index].sellers;
-    console.log(seller);
-    setState(prev => ({ ...prev, sellershopid: items[index].id }));
   };
 
   const onDelete = async (id: string) => {
@@ -51,10 +32,6 @@ const Main: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-between">
-        <h2 className="text-white">Shops</h2>
-        <Button onClick={() => setParams({ shopId: 'new' })}>Add</Button>
-      </div>
       <Table
         loading={isLoading}
         dataSource={items}
@@ -63,8 +40,7 @@ const Main: React.FC = () => {
           pageSize: meta.limit,
           total: meta.total,
           current: meta.page,
-          onChange: (page, limit) => setParams({ page, limit }),
-          showSizeChanger: true
+          onChange: (page, limit) => setParams({ page, limit })
         }}
         columns={[
           {
@@ -84,15 +60,6 @@ const Main: React.FC = () => {
             dataIndex: 'number'
           },
           {
-            title: 'seller',
-            dataIndex: 'seller',
-            render: (record, val, index) => (
-              <Tag onClick={() => getSeller(index)} color="grey" className="cursor-pointer">
-                seller
-              </Tag>
-            )
-          },
-          {
             title: 'Created At',
             dataIndex: 'createdAt'
           },
@@ -101,14 +68,6 @@ const Main: React.FC = () => {
             dataIndex: 'id',
             render: shopId => (
               <Button.Group>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    onInfo(shopId);
-                  }}
-                >
-                  info
-                </Button>
                 <Button onClick={() => setParams({ shopId })}>Edit</Button>
                 <Popconfirm
                   title="Delete the shop"
@@ -126,6 +85,13 @@ const Main: React.FC = () => {
           }
         ]}
       />
+      <Button
+        danger
+        type="primary"
+        className="absolute bottom-8 right-8 !h-[50px] !w-[50px] rounded-full"
+        icon={<PlusOutlined />}
+        onClick={() => setParams({ shopId: 'new' })}
+      />
       <Modal
         open={!!shopId}
         className="p-0"
@@ -134,19 +100,6 @@ const Main: React.FC = () => {
         onCancel={() => setParams({ shopId: undefined })}
       >
         {shopId === 'new' ? <Add onSuccess={onSuccess} /> : <Update onSuccess={onSuccess} shopId={shopId!} />}
-      </Modal>
-      <Modal open={open!} className="p-0" footer={null} closeIcon={true} onCancel={() => setOpen(false)}>
-        {<Single shopId={singleId} />}
-      </Modal>
-
-      <Modal
-        open={seller}
-        className="p-0"
-        footer={null}
-        closeIcon={true}
-        onCancel={() => setState(prev => ({ ...prev, seller: false }))}
-      >
-        <Seller id={sellershopid} />
       </Modal>
     </>
   );
