@@ -26,7 +26,7 @@ const Add: React.FC<AddProps> = ({ onSuccess }) => {
 
   return (
     <div>
-      <h1 className="m-0">Add Page</h1>
+      <h1 className="m-0">Add Shop</h1>
       <Form form={form} onFinish={onFinish} className="flex flex-col gap-2">
         <Form.Item<Types.IForm.Add>
           className="m-0"

@@ -33,7 +33,7 @@ const Update: React.FC<UpdateProps> = ({ onSuccess, shopId }) => {
 
   return (
     <div>
-      <h1 className="m-0">Update Page</h1>
+      <h1 className="m-0">Update Shop</h1>
       <Form form={form} onFinish={onFinish} className="flex flex-col gap-2">
         <Form.Item<Types.IForm.Update>
           className="m-0"
