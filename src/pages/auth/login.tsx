@@ -14,6 +14,7 @@ const Login: React.FC = () => {
       const { data } = await Api.Login(values);
       const { token } = data;
       session.add(token);
+      console.log(token);
 
       {
         const { data } = await Api.Me({ token });
